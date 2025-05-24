@@ -41,7 +41,7 @@ export default function Home() {
                     'Error loading price'
                   )}
                 </div>
-                {priceData && (
+                {priceData && priceData.change24h !== undefined && (
                   <div className={`text-sm ${priceData.change24h >= 0 ? 'text-green-400' : 'text-red-400'}`}>
                     {priceData.change24h >= 0 ? '+' : ''}{priceData.change24h.toFixed(2)}% (24h)
                   </div>
