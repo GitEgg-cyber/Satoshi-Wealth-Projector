@@ -7,8 +7,8 @@ import { formatCurrency, formatLargeNumber } from '@/lib/calculators';
 
 export default function BitcoinChart() {
   const [timeframe, setTimeframe] = useState<number>(365);
-  const { data: historicalData, isLoading: isLoadingHistory } = useHistoricalPrices(timeframe);
-  const { data: priceData, isLoading: isLoadingPrice } = useBitcoinPrice();
+  const { data: historicalData, isLoading: isLoadingHistory, error: historyError } = useHistoricalPrices(timeframe);
+  const { data: priceData, isLoading: isLoadingPrice, error: priceError } = useBitcoinPrice();
 
   const timeframeOptions = [
     { label: '1Y', days: 365 },
@@ -29,6 +29,18 @@ export default function BitcoinChart() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <div className="animate-pulse">Loading charts...</div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (historyError && !historicalData) {
+    return (
+      <section id="charts" className="py-16 bg-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <div className="text-red-400">Unable to load chart data. Please try again in a moment.</div>
           </div>
         </div>
       </section>
