@@ -30,11 +30,42 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.json(cachedData);
       }
 
+      // Try to get latest price from database first
+      const dbPrice = await bitcoinStorage.getLatestBitcoinPrice();
+      if (dbPrice && Date.now() - new Date(dbPrice.timestamp).getTime() < CACHE_DURATION) {
+        const priceData = {
+          price: parseFloat(dbPrice.price),
+          marketCap: parseFloat(dbPrice.marketCap || '0'),
+          volume24h: parseFloat(dbPrice.volume24h || '0'),
+          change24h: parseFloat(dbPrice.change24h || '0'),
+          ath: parseFloat(dbPrice.ath || '73750'),
+          atl: parseFloat(dbPrice.atl || '0.0048'),
+          athDate: dbPrice.athDate || 'Mar 14, 2024',
+          atlDate: dbPrice.atlDate || 'Jul 5, 2013',
+        };
+        setCachedData(cacheKey, priceData);
+        return res.json(priceData);
+      }
+
       const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true');
       
       if (!response.ok) {
         if (response.status === 429) {
-          // Rate limited - return cached data if available, otherwise error
+          // Rate limited - return database data if available
+          if (dbPrice) {
+            const fallbackData = {
+              price: parseFloat(dbPrice.price),
+              marketCap: parseFloat(dbPrice.marketCap || '0'),
+              volume24h: parseFloat(dbPrice.volume24h || '0'),
+              change24h: parseFloat(dbPrice.change24h || '0'),
+              ath: parseFloat(dbPrice.ath || '73750'),
+              atl: parseFloat(dbPrice.atl || '0.0048'),
+              athDate: dbPrice.athDate || 'Mar 14, 2024',
+              atlDate: dbPrice.atlDate || 'Jul 5, 2013',
+            };
+            return res.json(fallbackData);
+          }
+          // Return cached data if available
           const staleData = cache.get(cacheKey);
           if (staleData) {
             return res.json(staleData.data);
@@ -63,11 +94,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
         marketCap: bitcoinData.usd_market_cap,
         volume24h: bitcoinData.usd_24h_vol,
         change24h: bitcoinData.usd_24h_change,
-        ath: coinData?.market_data?.ath?.usd || 73750, // Fallback to known ATH
-        atl: coinData?.market_data?.atl?.usd || 0.0048, // Fallback to known ATL
+        ath: coinData?.market_data?.ath?.usd || 73750,
+        atl: coinData?.market_data?.atl?.usd || 0.0048,
         athDate: coinData?.market_data?.ath_date?.usd ? new Date(coinData.market_data.ath_date.usd).toLocaleDateString() : 'Mar 14, 2024',
         atlDate: coinData?.market_data?.atl_date?.usd ? new Date(coinData.market_data.atl_date.usd).toLocaleDateString() : 'Jul 5, 2013',
       };
+
+      // Save to database
+      try {
+        await bitcoinStorage.saveBitcoinPrice({
+          price: priceData.price.toString(),
+          marketCap: priceData.marketCap.toString(),
+          volume24h: priceData.volume24h.toString(),
+          change24h: priceData.change24h.toString(),
+          ath: priceData.ath.toString(),
+          atl: priceData.atl.toString(),
+          athDate: priceData.athDate,
+          atlDate: priceData.atlDate,
+        });
+      } catch (dbError) {
+        console.warn('Failed to save price to database:', dbError);
+      }
       
       setCachedData(cacheKey, priceData);
       res.json(priceData);
