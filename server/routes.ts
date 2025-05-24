@@ -1,5 +1,6 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
+import { bitcoinStorage } from "./storage";
 
 // Simple in-memory cache
 const cache = new Map<string, { data: any; timestamp: number }>();
