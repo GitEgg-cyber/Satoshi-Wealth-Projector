@@ -3,6 +3,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import Header from '@/components/header';
 import SatoshiCalculator from '@/components/satoshi-calculator';
 import BitcoinChart from '@/components/bitcoin-chart';
+import SCurveVisualization from '@/components/s-curve-visualization';
 import GrowthProjections from '@/components/growth-projections';
 import EducationalContent from '@/components/educational-content';
 import Footer from '@/components/footer';
@@ -61,6 +62,7 @@ export default function Home() {
       </section>
 
       <SatoshiCalculator />
+      <SCurveVisualization />
       <BitcoinChart />
       <GrowthProjections />
       <EducationalContent />
