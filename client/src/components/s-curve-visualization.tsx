@@ -167,7 +167,7 @@ export default function SCurveVisualization() {
             <div className="h-96">
               <ResponsiveContainer width="100%" height="100%">
                 {activeView === 'adoption' ? (
-                  <LineChart data={isZoomed ? internetData.slice(-8) : internetData}>
+                  <AreaChart data={isZoomed ? internetData.slice(-8) : internetData}>
                     <defs>
                       <linearGradient id="internetGradient" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.8}/>
@@ -190,69 +190,24 @@ export default function SCurveVisualization() {
                       domain={isZoomed ? [20, 80] : [0, 80]}
                     />
                     <Tooltip content={<CustomTooltip />} />
-                    
-                    {/* Internet S-Curve */}
-                    <Line
+                    <Area
                       type="monotone"
                       dataKey="adoption"
                       stroke="#3B82F6"
+                      fill="url(#internetGradient)"
                       strokeWidth={3}
-                      dot={false}
                       name="Internet Adoption"
-                      strokeDasharray="0"
                     />
-                    
-                    {/* Bitcoin S-Curve Overlay - Map Bitcoin years to equivalent internet timeline */}
-                    {!isZoomed && bitcoinData.map((point, index) => {
-                      // Map Bitcoin 2009-2024 to Internet 1990-2005 equivalent position
-                      const bitcoinStartYear = 2009;
-                      const internetStartYear = 1990;
-                      const equivalentInternetYear = internetStartYear + (point.year - bitcoinStartYear);
-                      
-                      if (equivalentInternetYear <= 2010) {
-                        return (
-                          <Line
-                            key={`bitcoin-point-${index}`}
-                            data={[{ year: equivalentInternetYear, adoption: point.adoption }]}
-                            type="monotone"
-                            dataKey="adoption"
-                            stroke="#F7931A"
-                            strokeWidth={4}
-                            dot={{ fill: '#F7931A', strokeWidth: 2, r: 3 }}
-                            connectNulls={false}
-                          />
-                        );
-                      }
-                      return null;
-                    })}
-                    
-                    {/* Show Bitcoin trajectory as overlay points */}
                     {!isZoomed && (
-                      <>
-                        <ReferenceLine 
-                          x={1998} 
-                          stroke="#F7931A" 
-                          strokeDasharray="5 5"
-                          strokeWidth={2}
-                          label={{ value: "Bitcoin 2024 ≈ Internet 1998", position: "top" }}
-                        />
-                        {/* Add Bitcoin trajectory line */}
-                        <Line
-                          data={bitcoinData.map(point => ({
-                            year: 1990 + (point.year - 2009), // Map to internet timeline
-                            adoption: point.adoption
-                          }))}
-                          type="monotone"
-                          dataKey="adoption"
-                          stroke="#F7931A"
-                          strokeWidth={3}
-                          strokeDasharray="8 4"
-                          dot={{ fill: '#F7931A', strokeWidth: 2, r: 4 }}
-                          name="Bitcoin Following Same Path"
-                        />
-                      </>
+                      <ReferenceLine 
+                        x={internetEquivalentYear} 
+                        stroke="#F7931A" 
+                        strokeDasharray="5 5"
+                        strokeWidth={2}
+                        label={{ value: "Bitcoin Today ≈ Internet 1998", position: "top" }}
+                      />
                     )}
-                  </LineChart>
+                  </AreaChart>
                 ) : (
                   <LineChart data={showProjections ? allBitcoinData : bitcoinData}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#333333" />
