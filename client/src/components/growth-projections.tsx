@@ -94,7 +94,7 @@ export default function GrowthProjections() {
                 <div className="space-y-4">
                   <Card className="bg-muted">
                     <CardContent className="p-4">
-                      <div className="text-sm text-gray-400 mb-1">Conservative (50% Annual)</div>
+                      <div className="text-sm text-gray-400 mb-1">Conservative (20% Annual)</div>
                       <div className="text-xl font-bold text-green-400">
                         {formatCurrency(projections.conservative)}
                       </div>

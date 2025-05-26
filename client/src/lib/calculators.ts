@@ -49,7 +49,7 @@ export interface GrowthProjection {
 export function calculateGrowthProjections(
   initialInvestment: number,
   years: number,
-  conservativeRate: number = 0.5,
+  conservativeRate: number = 0.2,
   moderateRate: number = 1.0,
   aggressiveRate: number = 1.5
 ): GrowthProjection {
