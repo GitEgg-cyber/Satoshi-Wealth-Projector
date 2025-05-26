@@ -29,7 +29,7 @@ const internetData = [
   { year: 2010, adoption: 79, users: 2000 }
 ];
 
-// Bitcoin data (2009-2024) mapped to similar curve
+// Bitcoin data (2009-2024) with realistic adoption percentages
 const bitcoinData = [
   { year: 2009, adoption: 0.001, users: 0.01, price: 0.0008 },
   { year: 2010, adoption: 0.01, users: 0.1, price: 0.08 },
@@ -46,7 +46,7 @@ const bitcoinData = [
   { year: 2021, adoption: 6.8, users: 68, price: 69000 },
   { year: 2022, adoption: 8.2, users: 82, price: 16500 },
   { year: 2023, adoption: 10.5, users: 105, price: 42000 },
-  { year: 2024, adoption: 12.8, users: 128, price: 107000 }
+  { year: 2024, adoption: 1.6, users: 128, price: 107000 }
 ];
 
 // Future projections based on S-curve model
