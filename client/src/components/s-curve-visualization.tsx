@@ -251,10 +251,10 @@ export default function SCurveVisualization() {
             <CardContent className="p-6">
               <div className="text-center">
                 <Globe className="text-blue-400 text-3xl mx-auto mb-4" />
-                <h3 className="text-lg font-bold text-blue-400 mb-2">Internet 1998</h3>
-                <p className="text-2xl font-bold text-white mb-2">~18% Adoption</p>
-                <p className="text-sm text-gray-300">280M users globally</p>
-                <p className="text-xs text-gray-400 mt-2">Still 12 years before peak growth</p>
+                <h3 className="text-lg font-bold text-blue-400 mb-2">Internet 1995</h3>
+                <p className="text-2xl font-bold text-white mb-2">~1.6% Adoption</p>
+                <p className="text-sm text-gray-300">50M users globally</p>
+                <p className="text-xs text-gray-400 mt-2">5 years before explosive growth</p>
               </div>
             </CardContent>
           </Card>
@@ -264,9 +264,9 @@ export default function SCurveVisualization() {
               <div className="text-center">
                 <Bitcoin className="text-bitcoin text-3xl mx-auto mb-4" />
                 <h3 className="text-lg font-bold text-bitcoin mb-2">Bitcoin 2024</h3>
-                <p className="text-2xl font-bold text-white mb-2">~13% Adoption</p>
+                <p className="text-2xl font-bold text-white mb-2">~1.6% Adoption</p>
                 <p className="text-sm text-gray-300">128M users globally</p>
-                <p className="text-xs text-gray-400 mt-2">Equivalent to Internet 1998!</p>
+                <p className="text-xs text-gray-400 mt-2">Equivalent to Internet 1995!</p>
               </div>
             </CardContent>
           </Card>
@@ -276,8 +276,8 @@ export default function SCurveVisualization() {
               <div className="text-center">
                 <Zap className="text-green-400 text-3xl mx-auto mb-4" />
                 <h3 className="text-lg font-bold text-green-400 mb-2">Potential 2040</h3>
-                <p className="text-2xl font-bold text-white mb-2">79% Adoption</p>
-                <p className="text-sm text-gray-300">~790M users</p>
+                <p className="text-2xl font-bold text-white mb-2">25% Adoption</p>
+                <p className="text-sm text-gray-300">~2 billion users</p>
                 <p className="text-xs text-gray-400 mt-2">Following internet curve</p>
               </div>
             </CardContent>
