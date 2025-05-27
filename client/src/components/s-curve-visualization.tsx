@@ -11,7 +11,7 @@ const internetData = [
   { year: 1992, adoption: 0.4, users: 8 },
   { year: 1993, adoption: 0.8, users: 15 },
   { year: 1994, adoption: 1.5, users: 25 },
-  { year: 1995, adoption: 3, users: 45 },
+  { year: 1995, adoption: 1.6, users: 50 },
   { year: 1996, adoption: 5, users: 77 },
   { year: 1997, adoption: 8, users: 120 },
   { year: 1998, adoption: 12, users: 188 },
@@ -76,7 +76,7 @@ export default function SCurveVisualization() {
   }, []);
 
   const currentYear = 2024;
-  const internetEquivalentYear = 1998; // Where Bitcoin is on internet timeline
+  const internetEquivalentYear = 1995; // Where Bitcoin is on internet timeline
 
   const formatPrice = (price: number) => {
     if (price >= 1000000) return `$${(price / 1000000).toFixed(1)}M`;
@@ -204,7 +204,7 @@ export default function SCurveVisualization() {
                         stroke="#F7931A" 
                         strokeDasharray="5 5"
                         strokeWidth={2}
-                        label={{ value: "Bitcoin Today ≈ Internet 1998", position: "top" }}
+                        label={{ value: "Bitcoin Today ≈ Internet 1995", position: "top" }}
                       />
                     )}
                   </AreaChart>
