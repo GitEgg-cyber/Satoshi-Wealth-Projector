@@ -1,5 +1,5 @@
 import { bitcoinPrices, historicalPrices, type BitcoinPrice, type InsertBitcoinPrice, type HistoricalPrice, type InsertHistoricalPrice } from "@shared/schema";
-import { db } from "./db";
+//import { db } from "./db";
 import { eq, desc, and, gte, lt } from "drizzle-orm";
 
 export interface IBitcoinStorage {
